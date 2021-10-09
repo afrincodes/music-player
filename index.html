@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <h3 style="font-size: 2rem; font-weight: lighter; color: grey;">..BTS Latest Songs..</h3>
+                <h2 id="title">BUTTER</h2>
+                <h3 id="artist">BTS</h3>
+            <div class="image">
+                <img src="image/img1.jpg" id="img" alt="">
+            </div>
+            <audio src="music/img1.mp3"  id="audio"></audio>
+            <div class="play">
+                <i class="fas fa-backward" id="prev" title="Previous"></i>
+                <i class="fas fa-play btn" id="play" title="Play"></i>
+                <i class="fas fa-forward" id="next" title="Next"></i>
+            </div> 
+        </div>
+    </div>
+    <script>
+        const music  = document.querySelector("audio");
+        const img  =  document.querySelector("img");
+        const play  = document.getElementById("play");
+        const title  = document.getElementById("title");
+        const artist  = document.getElementById("artist");
+        const prev  = document.getElementById("prev");
+        const next  = document.getElementById("next");
+
+        const songs  =  [{
+            name:"img1",
+            title:"Butter",
+            artist:"BTS",
+        },
+        {
+            name:"img2",
+            title:"Dynamite",
+            artist:"BTS", 
+        },
+        {
+            name:"img3",
+            title:"My Universe",
+            artist:"BTS",
+        },
+        {
+            name:"img4",
+            title:"P-To-D",
+            artist:"BTS",
+        },
+        {
+            name:"img5",
+            title:"Idol",
+            artist:"BTS",
+        },
+        {
+            name:"img6",
+            title:"Black Swan",
+            artist:"BTS",
+        },
+        {
+            name:"img7",
+            title:"Boy with Luv",
+            artist:"BTS",
+        },
+        {
+            name:"img8",
+            title:"DNA",
+            artist:"BTS",
+        },
+    ];
+        let isplaying = false;
+
+        const playmusic = () => {
+            isplaying = true;
+            music.play();
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        }
+        const pausemusic = () => {
+            isplaying = false;
+            music.pause();
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        }
+
+        play.addEventListener("click", () => {
+            // if (isplaying){
+            //     pausemusic();
+            // }
+            // else{
+            //     playmusic();
+            // }
+            isplaying ? pausemusic() : playmusic();
+        });
+
+        //changing Music data
+
+
+        const loadsong = (songs) => {
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "music/" + songs.name + ".mp3";
+            img.src = "image/" + songs.name + ".jpg";
+        };
+
+        songindex = 0;
+        //loadsong(songs);
+
+        const nextsong = () => {
+            songindex = (songindex +1) % songs.length;
+            loadsong(songs[songindex]);
+            playmusic();
+        };
+        const prevsong = () => {
+            songindex = (songindex - 1 + songs.length) % songs.length;
+            loadsong(songs[songindex]);
+            playmusic();
+        };
+
+        next.addEventListener("click", nextsong);
+        prev.addEventListener("click", prevsong);
+    </script>
+</body>
+</html>
